@@ -1,0 +1,4 @@
+{
+  "extends": "some-tsconfig-preset/workers",
+  "include": [ "**/*.ts" ]
+}
