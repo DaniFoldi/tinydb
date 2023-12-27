@@ -1,10 +1,11 @@
 account_id = '4afac2ff1d8101bb0852545f1e7783fe'
+name = 'tinydb'
 main = 'src/index.ts'
 workers_dev = false
 compatibility_date = '2023-12-10'
 compatibility_flags = [ 'nodejs_compat' ]
 
-routes = ['tinydb.danifoldi.com/*']
+routes = [ 'tinydb.danifoldi.com/*' ]
 kv_namespaces = [
-    { binding = 'KV', id = 'b068aa09d3d3457eb3e7d881ed7b9418' }
+  { binding = 'KV', id = 'b068aa09d3d3457eb3e7d881ed7b9418' }
 ]

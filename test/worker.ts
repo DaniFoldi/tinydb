@@ -66,6 +66,6 @@ describe('worker', () => {
     expect(store2.status).toBe(200)
     const list = await worker.fetch('/list?secret=secret&key=test')
     const data = await list.text()
-    expect(data).toMatchInlineSnapshot(`"{"test1":"value1","test2":"value2"}"`)
+    expect(data).toMatchInlineSnapshot('"{"test1":"value1","test2":"value2"}"')
   })
 })
