@@ -68,4 +68,36 @@ describe('worker', () => {
     const data = await list.text()
     expect(data).toMatchInlineSnapshot('"{"test1":"value1","test2":"value2"}"')
   })
+
+  it('shows all keys', async () => {
+    const store1 = await worker.fetch('/set?secret=secret&key=test1', {
+      method: 'POST',
+      body: 'value1'
+    })
+    expect(store1.status).toBe(200)
+    const store2 = await worker.fetch('/set?secret=secret&key=test2', {
+      method: 'POST',
+      body: 'value2'
+    })
+    expect(store2.status).toBe(200)
+    const keys = await worker.fetch('/keys?secret=secret&key=test')
+    const data = await keys.text()
+    expect(data).toMatchInlineSnapshot(`""`)
+  })
+
+  it('shows all values', async () => {
+    const store1 = await worker.fetch('/set?secret=secret&key=test1', {
+      method: 'POST',
+      body: 'value1'
+    })
+    expect(store1.status).toBe(200)
+    const store2 = await worker.fetch('/set?secret=secret&key=test2', {
+      method: 'POST',
+      body: 'value2'
+    })
+    expect(store2.status).toBe(200)
+    const keys = await worker.fetch('/values?secret=secret&key=test')
+    const data = await keys.text()
+    expect(data).toMatchInlineSnapshot(`""test1\\ntest2""`)
+  })
 })
