@@ -1,0 +1,31 @@
+{
+  "name": "tinydb",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.ts",
+  "type": "module",
+  "scripts": {
+    "deploy": "wrangler deploy",
+    "dev": "wrangler dev",
+    "lint": "eslint --cache .",
+    "test": "vitest",
+    "typecheck": "tsc"
+  },
+  "keywords": [],
+  "author": "DaniFoldi",
+  "license": "MIT",
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20231218.0",
+    "bundled-eslint-config": "^0.2.15",
+    "eslint": "^8.56.0",
+    "some-tsconfig-preset": "^1.5.0",
+    "typescript": "^5.3.3",
+    "vitest": "^1.1.0",
+    "wrangler": "^3.22.1"
+  },
+  "dependencies": {
+    "@neoaren/comet": "^3.2.1",
+    "flareutils": "^0.6.0",
+    "zod": "^3.22.4"
+  }
+}
