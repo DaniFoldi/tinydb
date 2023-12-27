@@ -24,6 +24,7 @@
     "wrangler": "^3.22.1"
   },
   "dependencies": {
+    "@microlabs/otel-cf-workers": "1.0.0-rc.20",
     "@neoaren/comet": "^3.2.1",
     "flareutils": "^0.6.0",
     "zod": "^3.22.4"
