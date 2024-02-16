@@ -4,7 +4,7 @@ import { worker } from '../worker'
 
 worker.route({
   method: 'GET',
-  pathname: '/values',
+  pathname: '/keys',
   query: z.strictObject({
     secret: z.string().regex(/[\w.-]{6,}/).max(256),
     key: z.string().max(256).default('')
