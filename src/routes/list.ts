@@ -1,4 +1,3 @@
-import { PromiseQueue } from 'flareutils'
 import { z } from 'zod'
 import { worker } from '../worker'
 
@@ -17,11 +16,9 @@ worker.route({
     limit: 128,
     prefix: `${secret}/${encodeURIComponent(key)}`
   })
-  const queue = new PromiseQueue()
   const data: Record<string, unknown> = {}
   for (const key of keys.keys) {
-    await queue.add(env.KV.get(key.name).then(value => data[key.name.replace(`${secret}/`, '')] = value))
+    data[key.name.replace(`${secret}/`, '')] = await env.KV.get(key.name)
   }
-  await queue.flush()
   return event.reply.ok(data)
 })
