@@ -1,6 +1,5 @@
 import { describe, expect, it, beforeAll, afterAll } from 'vitest'
-import { unstable_dev } from 'wrangler'
-import type { UnstableDevWorker } from 'wrangler'
+import { unstable_dev, type UnstableDevWorker } from 'wrangler'
 
 
 describe('worker', () => {
@@ -29,6 +28,7 @@ describe('worker', () => {
       body: 'value'
     })
     expect(store.status).toBe(200)
+
     const retrieve = await worker.fetch('/get?secret=secret&key=key')
     expect(retrieve.status).toBe(200)
     await expect(retrieve.text()).resolves.toBe('value')
@@ -40,14 +40,17 @@ describe('worker', () => {
       body: 'value1'
     })
     expect(store1.status).toBe(200)
+
     const store2 = await worker.fetch('/set?secret=222222&key=key', {
       method: 'POST',
       body: 'value2'
     })
     expect(store2.status).toBe(200)
+
     const retrieve1 = await worker.fetch('/get?secret=111111&key=key')
     expect(retrieve1.status).toBe(200)
     await expect(retrieve1.text()).resolves.toBe('value1')
+
     const retrieve2 = await worker.fetch('/get?secret=222222&key=key')
     expect(retrieve2.status).toBe(200)
     await expect(retrieve2.text()).resolves.toBe('value2')
@@ -59,11 +62,13 @@ describe('worker', () => {
       body: 'value1'
     })
     expect(store1.status).toBe(200)
+
     const store2 = await worker.fetch('/set?secret=secret&key=test2', {
       method: 'POST',
       body: 'value2'
     })
     expect(store2.status).toBe(200)
+
     const list = await worker.fetch('/list?secret=secret&key=test')
     const data = await list.text()
     expect(data).toMatchInlineSnapshot('"{"test1":"value1","test2":"value2"}"')
@@ -75,14 +80,16 @@ describe('worker', () => {
       body: 'value1'
     })
     expect(store1.status).toBe(200)
+
     const store2 = await worker.fetch('/set?secret=secret&key=test2', {
       method: 'POST',
       body: 'value2'
     })
     expect(store2.status).toBe(200)
+
     const keys = await worker.fetch('/keys?secret=secret&key=test')
     const data = await keys.text()
-    expect(data).toMatchInlineSnapshot(`""`)
+    expect(data).toMatchInlineSnapshot('""')
   })
 
   it('shows all values', async () => {
@@ -91,13 +98,15 @@ describe('worker', () => {
       body: 'value1'
     })
     expect(store1.status).toBe(200)
+
     const store2 = await worker.fetch('/set?secret=secret&key=test2', {
       method: 'POST',
       body: 'value2'
     })
     expect(store2.status).toBe(200)
+
     const keys = await worker.fetch('/values?secret=secret&key=test')
     const data = await keys.text()
-    expect(data).toMatchInlineSnapshot(`""test1\\ntest2""`)
+    expect(data).toMatchInlineSnapshot('""test1\\ntest2""')
   })
 })

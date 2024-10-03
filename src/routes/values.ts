@@ -7,7 +7,8 @@ worker.route({
   pathname: '/values',
   query: z.strictObject({
     secret: z.string().regex(/[\w.-]{6,}/).max(256),
-    key: z.string().max(256).default('')
+    key: z.string().max(256).default(''),
+    separator: z.string().max(1).default('\n')
   })
 }, async ({ event, env }) => {
   const { key, secret } = event.query
@@ -17,8 +18,10 @@ worker.route({
     prefix: `${secret}/${encodeURIComponent(key)}`
   })
   const data: Record<string, unknown> = {}
+
   for (const key of keys.keys) {
     data[key.name.replace(`${secret}/`, '')] = await env.KV.get(key.name)
   }
-  return event.reply.ok(Object.values(data).join('\n'))
+
+  return event.reply.ok(Object.values(data).join(event.query.separator))
 })

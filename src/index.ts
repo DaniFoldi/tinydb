@@ -1,9 +1,8 @@
-import { instrument } from '@microlabs/otel-cf-workers'
+import { instrument, type ResolveConfigFn } from '@microlabs/otel-cf-workers'
 import { name, version } from '../package.json'
 import { worker } from './worker'
-// eslint-disable-next-line import/order
+
 import './routes'
-import type { ResolveConfigFn } from '@microlabs/otel-cf-workers'
 
 
 const handler = <ExportedHandler<Environment>>{
@@ -39,4 +38,4 @@ const otelConfig: ResolveConfigFn = (env: Environment, _trigger) => {
   }
 }
 
-export default instrument(handler, otelConfig)
+export default handler // instrument(handler, otelConfig)

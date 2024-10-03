@@ -17,8 +17,10 @@ worker.route({
     prefix: `${secret}/${encodeURIComponent(key)}`
   })
   const data: Record<string, unknown> = {}
+
   for (const key of keys.keys) {
     data[key.name.replace(`${secret}/`, '')] = await env.KV.get(key.name)
   }
+
   return event.reply.ok(data)
 })

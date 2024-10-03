@@ -13,5 +13,6 @@ worker.route({
   const { key, secret } = event.query
 
   const value = await env.KV.get(`${secret}/${encodeURIComponent(key)}`)
+
   return event.reply.raw(new Response(value, { status: 200 }))
 })
