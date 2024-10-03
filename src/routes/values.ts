@@ -8,7 +8,7 @@ worker.route({
   query: z.strictObject({
     secret: z.string().regex(/[\w.-]{6,}/).max(256),
     key: z.string().max(256).default(''),
-    separator: z.string().max(1).default('\n')
+    separator: z.string().max(10).default('\n')
   })
 }, async ({ event, env }) => {
   const { key, secret } = event.query
