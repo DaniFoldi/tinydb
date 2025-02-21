@@ -1,8 +1,10 @@
-import { instrument, type ResolveConfigFn } from '@microlabs/otel-cf-workers'
+import { instrumentWorker } from '@comment-team/libworker-lib/opentelemetry'
+import { withUnilog } from '@comment-team/unilog-worker'
 import { name, version } from '../package.json'
 import { worker } from './worker'
 
 import './routes'
+import { WorkerEntrypoint } from 'cloudflare:workers'
 
 
 const handler = <ExportedHandler<Environment>>{
@@ -11,7 +13,13 @@ const handler = <ExportedHandler<Environment>>{
   }
 }
 
-const otelConfig: ResolveConfigFn = (env: Environment, _trigger) => {
+class HandlerRpc extends WorkerEntrypoint<Environment> {
+  override async fetch(request: Request) {
+    return worker.handler(request, this.env, this.ctx)
+  }
+}
+
+const otelConfig = (env: Environment) => {
   return {
     exporter: {
       url: 'https://api.axiom.co/v1/traces',
@@ -20,22 +28,22 @@ const otelConfig: ResolveConfigFn = (env: Environment, _trigger) => {
         'X-Axiom-Dataset': 'tinydb-otel'
       }
     },
-    fetch: {
-      includeTraceContext(request) {
-        return new URL(request.url).hostname === 'tinydb.danifoldi.com'
-      }
-    },
-    handlers: {
-      fetch: {
-        acceptTraceContext: false
-      }
-    },
     service: {
-      name: name,
-      namespace: 'tinydb.danifoldi.com',
+      name,
+      namespace: 'tinydb',
       version
     }
   }
 }
 
-export default handler // instrument(handler, otelConfig)
+export default withUnilog(instrumentWorker(handler, otelConfig), {
+  serviceEnvironment: {
+    'tinydb': 'production'
+  }
+})
+
+export const Test = withUnilog(HandlerRpc, {
+  serviceEnvironment: {
+    'tinydb': 'production'
+  }
+})

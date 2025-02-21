@@ -15,18 +15,20 @@
   "author": "DaniFoldi",
   "license": "MIT",
   "devDependencies": {
-    "@cloudflare/workers-types": "^4.20240925.0",
-    "bundled-eslint-config": "^0.2.27",
-    "eslint": "^8.57.1",
-    "some-tsconfig-preset": "^1.5.0",
-    "typescript": "^5.6.2",
-    "vitest": "^1.6.0",
-    "wrangler": "^3.79.0"
+    "@cloudflare/workers-types": "^4.20250214.0",
+    "bundled-eslint-config": "^0.5.12",
+    "eslint": "^9.21.0",
+    "jiti": "^2.4.2",
+    "some-tsconfig-preset": "^1.6.0",
+    "typescript": "^5.7.3",
+    "vitest": "^1.6.1",
+    "wrangler": "^3.109.2"
   },
   "dependencies": {
-    "@microlabs/otel-cf-workers": "1.0.0-rc.20",
-    "@neoaren/comet": "^3.4.1",
-    "zod": "^3.23.8"
+    "@comment-team/libworker-lib": "^2.20.6",
+    "@comment-team/unilog-worker": "^1.0.6",
+    "@neoaren/comet": "^3.6.0",
+    "zod": "^3.24.2"
   },
   "packageManager": "pnpm@9.11.0"
 }

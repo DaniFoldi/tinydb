@@ -1,9 +1,9 @@
 import { describe, expect, it, beforeAll, afterAll } from 'vitest'
-import { unstable_dev, type UnstableDevWorker } from 'wrangler'
+import { unstable_dev, type Unstable_DevWorker } from 'wrangler'
 
 
 describe('worker', () => {
-  let worker: UnstableDevWorker
+  let worker: Unstable_DevWorker
 
   beforeAll(async () => {
     worker = await unstable_dev('src/index.ts', {

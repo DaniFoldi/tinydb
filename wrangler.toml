@@ -1,14 +1,22 @@
-account_id = '4afac2ff1d8101bb0852545f1e7783fe'
+account_id = 'd0238d3a1eebca7fc036cb766a5e538f'
 name = 'tinydb'
 main = 'src/index.ts'
-workers_dev = false
+workers_dev = true
 compatibility_date = '2024-10-01'
 compatibility_flags = [ 'nodejs_compat' ]
 
-routes = [ 'tinydb.danifoldi.com/*' ]
+#routes = [ 'tinydb.danifoldi.com/*' ]
 kv_namespaces = [
-  { binding = 'KV', id = 'b068aa09d3d3457eb3e7d881ed7b9418' }
+  { binding = 'KV', id = '526e10b3844345fe9b0b98bc48e1471d' }
 ]
 
-[observability]
-enabled = true
+services = [
+  { binding = 'UNILOG', service = 'unilog' }
+]
+
+unsafe.bindings = [
+    { name = "METADATA_BINDING", type = "metadata" },
+]
+version_metadata.binding = 'VERSION_METADATA_BINDING'
+
+observability.enabled = true
